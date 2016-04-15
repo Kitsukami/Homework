@@ -1,11 +1,30 @@
+
 public class Driver 
 {
 	public static void main(String[] args)
 	{
-		String s = "hello";
-		String s2 = "elephant";
-		String s3 = "67452";
-		System.out.println(Driver.stringToInt(s3));
+		String s = "111101";
+		System.out.println(Driver.binaryToInteger(s));
+	}
+	
+	//this guy should take a String representation of a binary number
+	//as a parameter and return as a int the decimal equivalent
+	//"1011" -> 11
+	static int binaryToInteger(String bin)
+	{
+		int place = 1;
+		int total = 0;
+		char currChar;
+		for(int i = bin.length()-1; i >= 0; i--)
+		{
+			currChar = bin.charAt(i);
+			if(currChar == '1');
+			{
+				total += Driver.charToInt(currChar) * place;
+			}
+		place *= 2;	
+		}
+	return total;	
 	}
 	
 	//return the integer version of the char parameter
@@ -19,20 +38,23 @@ public class Driver
 	//"124" -> 124
 	static int stringToInt(String s)
 	{
-		int placeHolder = 1;
-		int answer = 0;
-		int intNum = 0;
-		int counter = s.length();
-		while(counter > 0)
+		int place = 1;
+		int total = 0;
+		char currChar;
+		for(int i = s.length()-1; i >= 0; i--)
 		{
-			counter = counter - 1;
-			char currentNum = s.charAt(counter);
-			intNum = Driver.charToInt(currentNum);
-			intNum = intNum * placeHolder;
-			placeHolder = placeHolder * 10;
-			answer = answer + intNum;
+			currChar = s.charAt(i);
+			if(currChar == '-')
+			{
+				return total * -1;
+			}
+			else
+			{
+				total += (Driver.charToInt(currChar) * place);
+				place *= 10;
+			}
 		}
-		return answer;
+		return total;
 	}
 	
 	static String removeChars(String s, String charsToRemove)
