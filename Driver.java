@@ -3,8 +3,29 @@ public class Driver
 {
 	public static void main(String[] args)
 	{
-		String s = "111101";
-		System.out.println(Driver.binaryToInteger(s));
+		System.out.println(Driver.decimalToBase(6234, 16));
+	}
+	
+	static char intToChar(int i)
+	{
+		String characters = "0123456789ABCDEF";
+		return characters.charAt(i);
+	}
+		
+	static String decimalToBase(int numDec, int Radix)
+	{
+		String base = "";
+		if(numDec == 0)
+		{
+			return "0";
+		}
+		while(numDec > 0)
+		{
+			int remainder = numDec % Radix;				//Saves remainder
+			base = Driver.intToChar(remainder) + base;  //Adds to the running total
+			numDec = numDec / Radix;					//Modifies the number
+		}
+		return base;
 	}
 	
 	//this guy should take a String representation of a binary number
@@ -30,7 +51,7 @@ public class Driver
 	//return the integer version of the char parameter
 	static int charToInt(char c)
 	{
-		return "0123456789".indexOf(c);
+		return "0123456789ABCDEF".indexOf(c);
 	}
 	
 	//Converts s, which is a string representation
