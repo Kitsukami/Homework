@@ -3,29 +3,114 @@ public class Driver
 {
 	public static void main(String[] args)
 	{
-		System.out.println(Driver.decimalToBase(6234, 16));
+		String s = "hello world";
+		char[] c = new char[s.length()];
+		c = Driver.stringToCharArray(s);
+		System.out.println(c[2]);
+		System.out.println(s.length());
 	}
 	
-	static char intToChar(int i)
+	static char[] stringToCharArray(String s)
 	{
-		String characters = "0123456789ABCDEF";
-		return characters.charAt(i);
+		char[] answer = new char[s.length()];
+		for(int i = 0; i < s.length(); i++)
+		{
+			answer[i] = s.charAt(i);
+		}
+	return answer;
 	}
-		
-	static String decimalToBase(int numDec, int Radix)
+	
+	static String substring(String s, int beginPos, int endPos)
 	{
-		String base = "";
-		if(numDec == 0)
+		String answer = "";
+		for(int i = beginPos; i < endPos; i++)
 		{
-			return "0";
+			answer += s.charAt(i);
 		}
-		while(numDec > 0)
+		return answer;
+	}
+	
+	static String substring(String s, int pos)
+	{
+		String answer = "";
+		for(int i = pos; i < s.length(); i++)
 		{
-			int remainder = numDec % Radix;				//Saves remainder
-			base = Driver.intToChar(remainder) + base;  //Adds to the running total
-			numDec = numDec / Radix;					//Modifies the number
+			answer += s.charAt(i);
+			//answer = answer + s.charAt(i)
 		}
-		return base;
+		return answer;
+	}
+	
+	static char int2Char(int num)
+	{
+		String map = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		return map.charAt(num);
+	}
+	
+	static String decimalToBase(int dec, int radix)
+	{
+		String answer = "";
+		while(dec != 0)
+		{
+			answer =  Driver.int2Char(dec % radix) + answer;
+			dec /= radix;
+		}
+		return answer;
+	}
+	
+	static String reverse(String s)
+	{
+		String answer = "";
+		for(int i = s.length()-1; i >= 0; i--)
+		{
+			answer += s.charAt(i);
+		}
+		return answer;
+	}
+	
+	static int baseToInteger(String s, int radix)
+	{
+		int place = 1;
+		int total = 0;
+		char currChar;
+		
+		for(int i = s.length()-1; i >= 0; i--)
+		{
+			currChar = s.charAt(i);
+			total += (Driver.charToInt(currChar) * place);
+			place *= radix;
+		}
+		return total;
+	}
+	
+	static int hexToInteger(String hex)
+	{
+		int place = 1;
+		int total = 0;
+		char currChar;
+		
+		for(int i = hex.length()-1; i >= 0; i--)
+		{
+			currChar = hex.charAt(i);
+			total += (Driver.charToInt(currChar) * place);
+			place *= 16;
+		}
+		return total;
+	}
+	
+	static int octalToInteger(String oct)
+	{
+		int place = 1;
+		int total = 0;
+		char currChar;
+		
+		for(int i = oct.length()-1; i >= 0; i--)
+		{
+			currChar = oct.charAt(i);
+			total += (Driver.charToInt(currChar) * place);
+			place *= 8;
+		}
+		return total;
 	}
 	
 	//this guy should take a String representation of a binary number
@@ -39,19 +124,19 @@ public class Driver
 		for(int i = bin.length()-1; i >= 0; i--)
 		{
 			currChar = bin.charAt(i);
-			if(currChar == '1');
+			if(currChar == '1')
 			{
-				total += Driver.charToInt(currChar) * place;
+				total += place;
 			}
-		place *= 2;	
+			place *= 2;
 		}
-	return total;	
+		return total;
 	}
 	
 	//return the integer version of the char parameter
 	static int charToInt(char c)
 	{
-		return "0123456789ABCDEF".indexOf(c);
+		return "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ".indexOf(c);
 	}
 	
 	//Converts s, which is a string representation
