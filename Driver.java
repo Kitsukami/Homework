@@ -1,23 +1,73 @@
 
+import java.util.Random;
+
+
 public class Driver 
 {
 	public static void main(String[] args)
 	{
-		String s = "hello world";
-		char[] c = new char[s.length()];
-		c = Driver.stringToCharArray(s);
-		System.out.println(c[2]);
-		System.out.println(s.length());
+		int[] arrayOfNumbers = new int[10];
+		Driver.fillArrayWithRandomInts(arrayOfNumbers);
+		Driver.printIntArray(arrayOfNumbers);
+		Driver.sortArray(arrayOfNumbers);
+		Driver.printIntArray(arrayOfNumbers);
+	}
+	
+	//Homework
+	static void sortArray(int[] ar)
+	{
+		int sortPlace = 0;
+		for(int counter = 0; counter < ar.length; counter++)
+		{
+			for(int i = 0; i < ar.length - 1; i++)
+			{
+				if(ar[i] < ar[i+1])
+				{
+					sortPlace = ar[i];
+					ar[i] = ar[i+1];
+					ar[i+1] = sortPlace;
+				}
+			}
+		}
+	}
+	
+	
+	static void fillArrayWithRandomInts(int[] ar)
+	{
+		Random r = new Random();
+		for(int i = 0; i < ar.length; i++)
+		{
+			ar[i] = r.nextInt(101);
+		}
+	}
+	
+	static void printIntArray(int[] ar)
+	{
+		for(int i = 0; i < ar.length; i++)
+		{
+			System.out.print(ar[i] + " ");
+		}
+		System.out.println();
+	}
+	
+	static String charArrayToString(char[] ar)
+	{
+		String answer = "";
+		for(int i = 0; i < ar.length; i++)
+		{
+			answer += ar[i];
+		}
+		return answer;
 	}
 	
 	static char[] stringToCharArray(String s)
 	{
-		char[] answer = new char[s.length()];
+		char[] ar = new char[s.length()];
 		for(int i = 0; i < s.length(); i++)
 		{
-			answer[i] = s.charAt(i);
+			ar[i] = s.charAt(i);
 		}
-	return answer;
+		return ar;
 	}
 	
 	static String substring(String s, int beginPos, int endPos)
