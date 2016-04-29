@@ -9,28 +9,147 @@ public class Driver
 		int[] arrayOfNumbers = new int[10];
 		Driver.fillArrayWithRandomInts(arrayOfNumbers);
 		Driver.printIntArray(arrayOfNumbers);
-		Driver.sortArray(arrayOfNumbers);
+		Driver.mergeSort(arrayOfNumbers);
 		Driver.printIntArray(arrayOfNumbers);
 	}
 	
+	
 	//Homework
-	static void sortArray(int[] ar)
+	static void mergeSort(int[] ar)
 	{
-		int sortPlace = 0;
-		for(int counter = 0; counter < ar.length; counter++)
+		Driver.mergeSortHelper(ar, 0, ar.length-1);
+	}
+	
+	static void mergeSortHelper(int[] ar, int begin, int end)
+	{
+		if(begin != end)
 		{
-			for(int i = 0; i < ar.length - 1; i++)
+			int low = begin;
+			int endLeft = (end-begin)/2 + begin;
+			int startRight = ((end-begin)/2 + begin) +1;
+			int high = end;
+			Driver.mergeSortHelper(ar, low, endLeft);
+			Driver.mergeSortHelper(ar, startRight, high);
+			
+			int[] storage = new int[high - low + 1];
+			int leftPos = low;
+			int rightPos = startRight;
+			for(int i = 0; i < storage.length; i++)
 			{
-				if(ar[i] < ar[i+1])
+				if(leftPos > endLeft)
 				{
-					sortPlace = ar[i];
-					ar[i] = ar[i+1];
-					ar[i+1] = sortPlace;
+					storage[i] = ar[rightPos];
+					rightPos++;
+				}
+				else if(rightPos > high)
+				{
+					storage[i] = ar[leftPos];
+					leftPos++;
+				}
+				else
+				{
+					if(ar[leftPos] < ar[rightPos])
+					{
+						storage[i] = ar[leftPos];
+						leftPos++;
+					}
+					else
+					{
+						storage[i] = ar[rightPos];
+						rightPos++;
+					}
 				}
 			}
+			int temp = 0;
+			for(int i = low; i <= high; i++)
+			{
+				ar[i] = storage[temp];
+				temp++;
+			}
+		}	
+	}
+	
+		
+	
+	
+	
+	
+	
+	
+	static void bubbleSort(int[] ar)
+	{
+		int temp;
+		int follower;
+		int currStart = 1;
+		
+		while(currStart < ar.length)
+		{
+			follower = currStart;
+			while(follower != 0 && ar[follower] < ar[follower-1])
+			{
+				temp = ar[follower];
+				ar[follower] = ar[follower - 1];
+				ar[follower-1] = temp;
+				follower--;
+			}
+			currStart++;
 		}
 	}
 	
+	static void ghettoSort(int[] ar)
+	{
+		int[] answer = new int[ar.length];
+		int[] arCopy = new int[ar.length];
+		Driver.copyArray(ar, arCopy);
+		int posOfSmallest;
+		int currPos = 0;
+		while(arCopy.length > 0)
+		{
+			posOfSmallest = Driver.positionOfSmallest(arCopy);
+			answer[currPos] = arCopy[posOfSmallest];
+			currPos++;
+			arCopy = Driver.removeAtPos(posOfSmallest, arCopy);
+		}
+		Driver.copyArray(answer, ar);
+	}
+	
+	static void copyArray(int[] source, int[] destination)
+	{
+		for(int i = 0; i < source.length; i++)
+		{
+			destination[i] = source[i];
+		}
+	}
+	
+	static int[] removeAtPos(int pos, int[] ar)
+	{
+		int[] answer = new int[ar.length - 1];
+		int currPos = 0;
+		for(int i = 0; i < pos; i++)
+		{
+			answer[currPos] = ar[i];
+			currPos++;
+		}
+		for(int i = pos+1; i < ar.length; i++)
+		{
+			answer[currPos] = ar[i];
+			currPos++;
+		}
+		return answer;
+	}
+	
+	static int positionOfSmallest(int[] ar)
+	{
+		int winnerPos = 0;
+		for(int i = 1; i < ar.length; i++)
+		{
+			if(ar[i] < ar[winnerPos])
+			{
+				winnerPos = i;
+			}
+		}
+		return winnerPos;
+	}
 	
 	static void fillArrayWithRandomInts(int[] ar)
 	{
